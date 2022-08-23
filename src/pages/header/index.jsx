@@ -17,7 +17,7 @@ const Header = () => {
   const setData = useHeaderStore((state) => state.setData);
 
   const updateTable = () => {
-    return getImageFeatureConfig({ imageVersion: 'text1' }).then((res) => {
+    return getImageFeatureConfig({ imageVersion: 'test1' }).then((res) => {
       setData(res);
     });
   };
