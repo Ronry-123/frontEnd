@@ -1,8 +1,8 @@
 import { Select } from 'antd';
 
-import { useHeadersStore } from '../header/headerStore';
+import { useHeaderStore } from '../header/headerStore';
 const Home = () => {
-  const data = useHeadersStore((s) => s.data);
+  const data = useHeaderStore((s) => s.data);
   return (
     <div>
       Home
