@@ -11,3 +11,7 @@ export const deleteImageFeatureConfigPOST = (data) => {
 export const updateImageFeatureConfigPOST = (data) => {
   return request.post('/feature/update-image-feature-config', data);
 };
+
+export const addImageFeatureConfigPOST = (data) => {
+  return request.post('/feature/add-image-feature-config', data);
+};

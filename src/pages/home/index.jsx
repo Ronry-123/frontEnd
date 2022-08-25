@@ -1,4 +1,5 @@
 import { Select } from 'antd';
+import Drawing from '../drawing';
 
 import { useHeaderStore } from '../header/headerStore';
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
           value: i.id,
         }))}
       />
+      <Drawing />
     </div>
   );
 };

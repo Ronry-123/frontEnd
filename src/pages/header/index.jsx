@@ -5,6 +5,7 @@ import {
   getImageFeatureConfig,
   updateImageFeatureConfig,
   deleteImageFeatureConfig,
+  addImageFeatureConfig,
 } from '../../service';
 
 import { useHeaderStore } from './headerStore';
@@ -15,6 +16,22 @@ const Header = () => {
   const [visible, setVisible] = useState(false);
   const data = useHeaderStore((state) => state.data);
   const setData = useHeaderStore((state) => state.setData);
+  const addLine = () => {
+    const newData = [...data];
+    newData.unshift({
+      id: 0,
+      featureName: '',
+      type: 'bool',
+      remark: '',
+      valid: true,
+      value: null,
+      dataFormat: null,
+      defaultValue: 'false',
+    });
+    setData(newData);
+    addImageFeatureConfig(newData);
+    updateTable();
+  };
 
   const updateTable = () => {
     return getImageFeatureConfig({ imageVersion: 'test1' }).then((res) => {
@@ -33,7 +50,7 @@ const Header = () => {
     {
       title: '属性名称',
       dataIndex: 'featureName',
-      render: (text, row, index) => {
+      render: (text, row, index) => (
         <Paragraph
           editable={{
             onChange: (newVal) => {
@@ -50,15 +67,19 @@ const Header = () => {
           }}
         >
           {text}
-        </Paragraph>;
-      },
+        </Paragraph>
+      ),
     },
     {
       title: '备注',
       dataIndex: 'remark',
     },
     {
-      title: '操作',
+      title: (
+        <Button size="small" type="link" onClick={addLine}>
+          创建
+        </Button>
+      ),
       dataIndex: 'oparate',
       render: (text, row) => (
         <Popconfirm

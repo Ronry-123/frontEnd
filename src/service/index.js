@@ -2,6 +2,7 @@ import {
   getImageFeatureConfigPOST,
   deleteImageFeatureConfigPOST,
   updateImageFeatureConfigPOST,
+  addImageFeatureConfigPOST,
 } from '../api';
 
 export const getImageFeatureConfig = (data) => {
@@ -14,4 +15,8 @@ export const deleteImageFeatureConfig = (data) => {
 
 export const updateImageFeatureConfig = (data) => {
   return updateImageFeatureConfigPOST(data);
+};
+
+export const addImageFeatureConfig = (data) => {
+  return addImageFeatureConfigPOST(data);
 };

@@ -6,8 +6,10 @@
   "dependencies": {
     "antd": "^4.22.4",
     "axios": "^0.27.2",
+    "konva": "^8.3.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-konva": "^18.2.1",
     "react-scripts": "5.0.1",
     "sass": "^1.54.4",
     "zustand": "^4.1.1"
