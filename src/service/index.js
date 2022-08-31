@@ -3,6 +3,8 @@ import {
   deleteImageFeatureConfigPOST,
   updateImageFeatureConfigPOST,
   addImageFeatureConfigPOST,
+  getAllImageVersionGET,
+  loginPOST,
 } from '../api';
 
 export const getImageFeatureConfig = (data) => {
@@ -19,4 +21,13 @@ export const updateImageFeatureConfig = (data) => {
 
 export const addImageFeatureConfig = (data) => {
   return addImageFeatureConfigPOST(data);
+};
+
+export const getAllImageVersion = (data) => {
+  return getAllImageVersionGET(data);
+};
+
+export const login = () => {
+  const data = { email: 'test@gmail.com', password: '123456' };
+  return loginPOST(data);
 };

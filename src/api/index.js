@@ -15,3 +15,11 @@ export const updateImageFeatureConfigPOST = (data) => {
 export const addImageFeatureConfigPOST = (data) => {
   return request.post('/feature/add-image-feature-config', data);
 };
+
+export const getAllImageVersionGET = () => {
+  return request.get('/image/get-all-image-version');
+};
+
+export const loginPOST = (data) => {
+  return request.post('auth/login', data);
+};

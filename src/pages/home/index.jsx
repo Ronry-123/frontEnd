@@ -1,9 +1,17 @@
 import { Select } from 'antd';
-import Drawing from '../drawing';
+import Info from '../info/index';
 
 import { useHeaderStore } from '../header/headerStore';
+import { useEffect } from 'react';
+import { login } from '../../service';
 const Home = () => {
   const data = useHeaderStore((s) => s.data);
+  useEffect(() => {
+    login().then((res) => {
+      const token = res.token;
+      localStorage.setItem('token', token);
+    });
+  }, []);
   return (
     <div>
       Home
@@ -14,7 +22,7 @@ const Home = () => {
           value: i.id,
         }))}
       />
-      <Drawing />
+      <Info />
     </div>
   );
 };

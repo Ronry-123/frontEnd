@@ -8,30 +8,16 @@ import {
   addImageFeatureConfig,
 } from '../../service';
 
-import { useHeaderStore } from './headerStore';
+/* import { useHeaderStore } from './headerStore';
+const data = useHeaderStore((state) => state.data);
+const setData = useHeaderStore((state) => state.setData);   防止点击创建后变成空白页面,因此注释掉了*/
 
 const { Paragraph } = Typography;
 
 const Header = () => {
   const [visible, setVisible] = useState(false);
-  const data = useHeaderStore((state) => state.data);
-  const setData = useHeaderStore((state) => state.setData);
-  const addLine = () => {
-    const newData = [...data];
-    newData.unshift({
-      id: 0,
-      featureName: '',
-      type: 'bool',
-      remark: '',
-      valid: true,
-      value: null,
-      dataFormat: null,
-      defaultValue: 'false',
-    });
-    setData(newData);
-    addImageFeatureConfig(newData);
-    updateTable();
-  };
+
+  const [data, setData] = useState([]);
 
   const updateTable = () => {
     return getImageFeatureConfig({ imageVersion: 'test1' }).then((res) => {
@@ -48,21 +34,45 @@ const Header = () => {
 
   const columns = [
     {
-      title: '属性名称',
+      title: '图片属性名称',
       dataIndex: 'featureName',
       render: (text, row, index) => (
         <Paragraph
+          id={text ? row.id : 'temp-create-feature-name'}
           editable={{
             onChange: (newVal) => {
-              if (!newVal) return;
-              if (newVal === row.featureName) return;
-              updateImageFeatureConfig({
-                ...row,
-                featureName: newVal,
-              }).then(() => {
-                message.success('修改成功');
-                updateTable();
-              });
+              // creat
+              if (!row.id) {
+                if (newVal == '') {
+                  setData((prev) => {
+                    const newVal = [...prev];
+                    newVal.shift();
+                    return newVal;
+                  });
+                } else {
+                  addImageFeatureConfig({
+                    dataFormat: '',
+                    defaultValue: 'false',
+                    featureName: newVal,
+                    imageVersion: 'test1', // 图片版本有三个：test1, 有丝分裂数据, 类器官数据。由于请求的是test1，因此此处创建时填写test1
+                    remark: '',
+                    type: 'checkbox',
+                  }).then(() => {
+                    message.success('创建成功');
+                    updateTable();
+                  });
+                }
+              } else {
+                // edit
+                if (newVal == '') return;
+                updateImageFeatureConfig({
+                  ...row,
+                  featureName: newVal,
+                }).then(() => {
+                  message.success('修改成功');
+                  updateTable();
+                });
+              }
             },
           }}
         >
@@ -76,12 +86,35 @@ const Header = () => {
     },
     {
       title: (
-        <Button size="small" type="link" onClick={addLine}>
+        <Button
+          type="link"
+          onClick={() => {
+            const newItem = {
+              dataFormat: '',
+              defaultValue: 'false',
+              featureName: '',
+              imageVersion: '有丝分裂数据',
+              remark: '',
+              type: 'checkbox',
+            };
+            setData((prev) => {
+              const newVal = [newItem, ...prev];
+              return newVal;
+            });
+            setTimeout(() => {
+              document
+                .getElementById('temp-create-feature-name')
+                .getElementsByClassName('ant-typography-edit')[0]
+                .click();
+            });
+          }}
+        >
           创建
         </Button>
       ),
       dataIndex: 'oparate',
-      render: (text, row) => (
+      width: 100,
+      render: (text, row, index) => (
         <Popconfirm
           title={
             <div>

@@ -19,3 +19,13 @@ request.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+request.interceptors.request.use(
+  function (config) {
+    config.headers = { 'x-token': localStorage.getItem('token') };
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
